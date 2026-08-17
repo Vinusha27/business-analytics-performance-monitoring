@@ -1,0 +1,8 @@
+services:
+  ventureflow:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      DATABASE_URL: sqlite:////app/ventureflow.db
+      JWT_SECRET: local-development-secret-change-me
+      LLM_PROVIDER: mock

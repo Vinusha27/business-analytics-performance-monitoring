@@ -1,3 +1,5 @@
-# Architecture
+# VentureFlow AI architecture
 
-The generator produces controlled, reproducible raw CSVs. The pipeline reads every source, removes exact duplicates, repairs missing customer regions, rejects invalid order items, records the quality outcome, and reloads all tables in a transactionally consistent order. The analytics layer joins normalized tables at query time; it is consumed directly by the Streamlit UI, FastAPI service, and report generator. SQLite provides zero-setup local operation; the schema uses portable relational SQL and a database URL setting supports a future PostgreSQL deployment.
+VentureFlow is a FastAPI application with a static responsive dashboard. The REST layer authenticates users with signed JWTs, scopes queries to their organization, and uses SQLAlchemy models for users, organizations, agents, workflows, executions, and recommendations.
+
+The provider boundary (`app/ai.py`) exposes a deterministic mock business analyst. It returns a safe execution plan, tool activity summary, metrics, and a final recommendation; no hidden reasoning is stored or shown. Workflow runs record node outcomes and feed the analytics queries. SQLite makes the demo zero-configuration, while `DATABASE_URL` supports PostgreSQL-compatible SQLAlchemy deployments.

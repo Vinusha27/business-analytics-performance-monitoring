@@ -1,46 +1,43 @@
-# Business Analytics & Performance Monitoring System
+# VentureFlow AI
 
-NexaRetail is a portfolio-grade analytics platform for monitoring e-commerce sales, profitability, customers, regions, product performance, and operating risk. It turns a reproducible synthetic source dataset into a validated SQLite warehouse, SQL/Python KPI layer, API, interactive dashboard, and automated executive report.
+VentureFlow AI is a runnable SaaS-style MVP for connecting business processes, having AI analyze them, automating repeatable work, and monitoring the results.
 
-## Architecture
+## Included
 
-```mermaid
-flowchart LR
-  A[Synthetic raw CSV] --> B[Validation and ETL]
-  B --> C[(SQLite relational database)]
-  C --> D[SQL + Python analytics]
-  D --> E[Streamlit dashboard]
-  D --> F[FastAPI]
-  D --> G[HTML + CSV report]
-```
+- JWT signup/login and organization-scoped data
+- AI agent creation and test execution using a deterministic, no-key mock provider
+- Workflow creation, visual node sequences, execution logging, and weekly/manual trigger metadata
+- Live KPI analytics calculated from persisted execution records
+- Recommendation triage (accept/dismiss) and an interactive REST API at `/docs`
+- Responsive browser dashboard, Docker support, seed data, and API tests
 
-## Features
-
-- 60k-order seasonal retail dataset with multiple channels, regions, returns, cancellations, duplicate orders, missing values, and invalid quantities.
-- Idempotent ETL with transparent data-quality summary and relational constraints.
-- Revenue, order, profitability, customer, product, regional, target, trend, and operating KPIs.
-- Explainable IQR daily-revenue anomaly detection, data-driven insights, and threshold alerts.
-- Six dashboard sections: Executive Overview, Sales, Product, Customer, Regional, Operations.
-- FastAPI endpoints: `/health`, `/kpis`, `/sales`, `/products`, `/customers`, `/regions`, `/alerts`, `/insights`.
-
-## Stack
-
-Python, Pandas, NumPy, SQLite (PostgreSQL-ready configuration), SQL, Streamlit, Plotly, FastAPI, pytest.
-
-## Run
+## Quick start
 
 ```powershell
-python -m pip install -r requirements.txt
-python data/generate_data.py
-python -m pipeline.run_pipeline
-streamlit run dashboard/app.py
-uvicorn api.main:app --reload
-python -m reports.generate_report
-pytest
+py -m pip install -r backend/requirements.txt
+py -m uvicorn backend.app.main:app --reload --port 8000
 ```
 
-SQLite is used by default at `data/nexaretail.db`; generated raw data and reports are intentionally ignored by Git. See `docs/` for metric definitions, schema descriptions, and design notes.
+Open `http://localhost:8000`. The first start creates the local database and demo workspace.
 
-## Business value
+Demo sign-in: `demo@ventureflow.ai` / `DemoPass123!`
 
-The system establishes a repeatable decision workflow: source-quality visibility prevents silent data loss, targets and alerts surface operating risks, and interactive trends reveal the categories/regions responsible for performance changes.
+Run verification with:
+
+```powershell
+py -m pytest tests/test_ventureflow.py
+```
+
+## Docker
+
+```powershell
+docker compose up --build
+```
+
+## Architecture and documentation
+
+See [architecture](docs/architecture.md), [API](docs/api.md), [workflows](docs/workflows.md), and [AI agents](docs/ai-agents.md). The original NexaRetail analytics project remains in the repository; VentureFlow adds a separate operational automation surface that can later consume its analytics pipeline.
+
+## Limitations
+
+The demo is intentionally synchronous and uses SQLite plus a deterministic local AI provider. Production scheduling, Redis jobs, PostgreSQL migrations, and a real LLM adapter are clean extension points rather than silently simulated infrastructure.
