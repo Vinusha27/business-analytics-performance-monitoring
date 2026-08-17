@@ -1,0 +1,1 @@
+SELECT p.category,ROUND(SUM(oi.quantity*oi.unit_price*(1-oi.discount)),2) net_revenue,ROUND(SUM(oi.quantity*p.cost),2) cost,ROUND(SUM(oi.quantity*(oi.unit_price*(1-oi.discount)-p.cost)),2) gross_profit FROM orders o JOIN order_items oi USING(order_id) JOIN products p USING(product_id) WHERE o.order_status='completed' GROUP BY p.category;

@@ -1,0 +1,1 @@
+SELECT region,sales_channel,COUNT(DISTINCT order_id) orders,SUM(quantity*unit_price*(1-discount)) revenue FROM orders JOIN order_items USING(order_id) WHERE order_status='completed' GROUP BY region,sales_channel ORDER BY revenue DESC;

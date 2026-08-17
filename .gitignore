@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.venv/
+.env
+*.db
+data/raw/*.csv
+data/processed/
+data/quality_summary.json
+reports/output/

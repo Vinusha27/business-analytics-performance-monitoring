@@ -1,0 +1,1 @@
+SELECT p.category,p.product_name,SUM(oi.quantity) units,SUM(oi.quantity*oi.unit_price*(1-oi.discount)) revenue,SUM(oi.quantity*(oi.unit_price*(1-oi.discount)-p.cost)) profit FROM products p JOIN order_items oi USING(product_id) JOIN orders o USING(order_id) WHERE o.order_status='completed' GROUP BY p.category,p.product_name ORDER BY revenue DESC;

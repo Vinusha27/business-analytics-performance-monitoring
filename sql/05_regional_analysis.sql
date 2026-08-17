@@ -1,0 +1,1 @@
+SELECT region,COUNT(DISTINCT order_id) orders,ROUND(SUM(quantity*unit_price*(1-discount)),2) revenue,ROUND(AVG(quantity*unit_price*(1-discount)),2) avg_item_value FROM orders JOIN order_items USING(order_id) WHERE order_status='completed' GROUP BY region ORDER BY revenue DESC;

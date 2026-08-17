@@ -1,0 +1,1 @@
+SELECT COUNT(DISTINCT order_id) total_orders,ROUND(100.0*COUNT(DISTINCT CASE WHEN order_status='completed' THEN order_id END)/COUNT(DISTINCT order_id),2) completion_rate_pct,ROUND(100.0*COUNT(DISTINCT CASE WHEN order_status='returned' THEN order_id END)/COUNT(DISTINCT order_id),2) return_rate_pct FROM orders;

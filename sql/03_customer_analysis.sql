@@ -1,0 +1,1 @@
+SELECT c.customer_segment,COUNT(DISTINCT o.customer_id) active_customers,COUNT(DISTINCT o.order_id) orders,SUM(oi.quantity*oi.unit_price*(1-oi.discount)) revenue FROM customers c JOIN orders o USING(customer_id) JOIN order_items oi USING(order_id) WHERE o.order_status='completed' GROUP BY c.customer_segment;
